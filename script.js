@@ -183,28 +183,44 @@ verifyPayment(6000)
 
 async function processRefund(requestId) {
   // Simulate refund verification (1 second)
-  await new Promise(resolve => setTimeout(resolve, 1000));
-  console.log(`Refund verification complete for request #${requestId}`);
+  try {
+    await new Promise(resolve => setTimeout(resolve, 1000));
+    console.log(`Refund verification complete for request #${requestId}`);
+    
+    // Simulate payment reversal (2 seconds)
+    await new Promise(resolve => setTimeout(resolve, 2000));
+    console.log(`Payment reversal complete for request #${requestId}`);
   
-  // Simulate payment reversal (2 seconds)
-  await new Promise(resolve => setTimeout(resolve, 2000));
-  console.log(`Payment reversal complete for request #${requestId}`);
-  
-  // Return final message
-  return `Refund complete for request #${requestId}`;
+    // Return final message
+    console.log(`Refund complete for request #${requestId}`);
+  }
+  catch (error) {
+    console.log(`Error processing refund for request #${requestId}`);
+  }
 }
-
 // USAGE
-
 processRefund(12345) // console log outputs "Payment reversal complete for request #12345" only
 
-processRefund(12345).then(result => {
-  console.log(result);  // Logs final result after all async operations complete
-}); // console log outputs ""Payment reversal complete ..." AND "refund complete for ..."
 
-async function main() {
-  const result = await processRefund(12345);
-  console.log(result);  // Now it logs the final result after all async operations complete
-}
-main(); // console log outputs ""Payment reversal complete ..." AND "refund complete for ..."
+// async function processRefund(requestId) {
+//   try {
+//     // Simulates 1-sec refund verification
+//     console.log(`Verifying refund request #${requestId}...`);
+//     await new Promise(resolve => setTimeout(resolve, 1000));
+//     // Simulates 2-sec payment reversal
+//     console.log(`Reversing payment for request #${requestId}...`);
+//     await new Promise(resolve => setTimeout(resolve, 2000)); // 2-sec payment reversal
+//     // Returns "Refund complete for request #X"
+//     console.log(`Refund complete for request #${requestId}`);
+//   } catch (error) {
+//     console.log(`Error processing refund for request #${requestId}`);
+//   }
+// }
+// processRefund("12345");
+
+// async function main() {
+//   const result = await processRefund(12345);
+//   console.log(result);  // Now it logs the final result after all async operations complete
+// }
+// main(); // console log outputs ""Payment reversal complete ..." AND "refund complete for ..."
 
